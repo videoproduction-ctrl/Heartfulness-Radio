@@ -65,7 +65,11 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   .top-right .live-tab .lt-count { font-size: 10px; }
   .top-right.vs-open > * { transform: none !important; }
 
-  /* Listener ↔ Studio switcher:
+  /* Listener page: hide the view switcher entirely on mobile —
+     the Studio is reached from the landing page on phones. */
+  .stage .viewswitch { display: none !important; }
+
+  /* Studio view switcher (keeps showing on Studio mobile only):
      Anchored bottom-RIGHT corner, raised above the mini player.
      Compact (no eyebrow label, smaller pills). Pinned to the viewport
      so it stays in the same place while you scroll. */
