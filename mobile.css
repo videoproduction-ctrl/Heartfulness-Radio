@@ -268,10 +268,19 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
 
 
 /* ============================================================
-   Touch a11y: enforce 40px minimum tap target on coarse pointers
+   Touch a11y: enforce 40px minimum tap target on coarse pointers.
+   IMPORTANT — exclude small UI elements that have fixed intrinsic
+   sizes (toggle switches, view-switch chips, theme glyphs) so the
+   rule doesn't stretch them out of shape.
    ============================================================ */
 @media (hover: none) and (pointer: coarse) {
-  button, .side-item, .lang-opt, .s-iconbtn, .top .tabs button, .top-right .live-tab { min-height: 40px; }
+  button:not(.switch):not(.vs-x):not(.vs-seg a):not(.s-theme button),
+  .side-item, .lang-opt, .s-iconbtn, .top .tabs button, .top-right .live-tab {
+    min-height: 40px;
+  }
+  /* Toggle switches keep their original size */
+  .switch { min-height: 24px !important; height: 24px !important; width: 42px !important; }
+  .switch i { top: 2.5px !important; left: 2.5px !important; width: 19px !important; height: 19px !important; }
 }
 
 
