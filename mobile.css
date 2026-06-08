@@ -1,0 +1,185 @@
+/* ============================================================
+   Heartfulness Radio — mobile refactor
+   Layered over styles.css / admin.css / immersive.css.
+   Goal: clean, no-overflow layout from 320px up to 768px.
+   ============================================================ */
+
+/* --- Universal: kill horizontal overflow & ensure media scales --- */
+html, body { max-width: 100%; overflow-x: hidden; }
+img, svg, video, canvas { max-width: 100%; height: auto; }
+* { box-sizing: border-box; }
+
+
+/* ============================================================
+   LISTENER (.stage / .top / .crail …)
+   ============================================================ */
+
+@media (max-width: 760px) {
+
+  /* Top bar: convert to 2-row grid so brand / nav / right cluster don't fight */
+  .top {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "brand .     right"
+      "tabs  tabs  tabs";
+    gap: 10px 12px;
+    padding: 12px 14px;
+    align-items: center;
+  }
+  .top .brand { grid-area: brand; flex: none; gap: 9px; min-width: 0; }
+  .top .brand .mark { width: 26px; height: 26px; }
+  .top .brand > div { min-width: 0; }
+  .top .brand b { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 38vw; }
+  .top .brand span { display: none; } /* hide "Live · Always on" tagline */
+  .top .spacer { display: none; }
+
+  .top .tabs {
+    grid-area: tabs;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    border-top: 1px solid color-mix(in oklab, var(--ink) 8%, transparent);
+    padding-top: 8px;
+  }
+  .top .tabs button {
+    font-size: 11px;
+    letter-spacing: .16em;
+    padding: 4px 2px;
+  }
+
+  .top-right {
+    grid-area: right;
+    flex: none;
+    margin: 0 !important;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+  /* keep the LIVE pill visible but compact: dot + count, no word "Live" */
+  .top-right .live-tab {
+    padding: 5px 9px;
+    font-size: 10px;
+    gap: 6px;
+  }
+  .top-right .live-tab .lt-count { font-size: 10px; }
+  .top-right.vs-open > * { transform: none !important; }
+
+  /* The floating view-switch button (Listener ↔ Studio nav aid) overlaps
+     the top bar on phones. Hide it; the landing page already exposes both. */
+  .viewswitch, .viewswitch.right { display: none !important; }
+
+
+  /* Now-Playing hero: tighten padding, scale the orb */
+  .now { padding: 6px 16px 4px; }
+  .now h1 { font-size: clamp(28px, 8.5vw, 44px); }
+  .now .kicker { gap: 12px; }
+  .now .controls { width: 100%; gap: 14px; margin-top: 14px; }
+
+  /* Hide the desktop-only side rails on mobile (already at 1180px but
+     guarantees no leak) */
+  .nside { display: none !important; }
+
+
+  /* Section rails: give a leading gutter and a trailing peek so cards
+     don't kiss the screen edge. Cards stay scrollable horizontally. */
+  .page-sec { padding: 36px 0 28px; }
+  .crail-label,
+  .rail-head { padding-left: 16px; padding-right: 16px; }
+  .rail-head { padding-left: 16px; margin-bottom: 14px; flex-direction: row; align-items: center; justify-content: space-between; }
+  .see-all { position: static !important; transform: none !important; margin: 0 !important; flex: none; }
+
+  .crail-wrap { padding: 0; margin: 0 !important; }
+  .crail {
+    padding: 4px 16px 8px !important;
+    margin: 0 !important;
+    gap: 12px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 16px;
+  }
+  .crail .ccard {
+    width: 78vw;
+    max-width: 280px;
+    scroll-snap-align: start;
+  }
+
+  /* Continue-listening dock-rail on the hero — same treatment */
+  .crail.expanded {
+    grid-template-columns: 1fr !important;
+    padding: 0 16px !important;
+  }
+
+
+  /* Trending list cards (rectangular tiles) — full-width, single column */
+  .trend-grid,
+  .sec-grid { grid-template-columns: 1fr !important; padding: 0 16px; gap: 10px; }
+
+
+  /* Mini bottom player: trim & no waveform on small screens */
+  .mini { padding: 10px 14px; gap: 10px; }
+  .mini .mwave { display: none; }
+  .mini b { font-size: 14px; }
+
+
+  /* Footer */
+  .imm-foot { padding: 24px 16px 80px; font-size: 12px; text-align: center; }
+
+  /* Language popover should never push off-screen */
+  .imm-lang-menu { right: 0; left: auto; min-width: 160px; }
+}
+
+
+@media (max-width: 400px) {
+  .top { padding: 10px 12px; gap: 8px 10px; }
+  .top .brand b { max-width: 44vw; font-size: 14px; }
+  .top .tabs { gap: 14px; }
+  .top .tabs button { font-size: 10.5px; letter-spacing: .14em; }
+  .top-right .live-tab span:not(.dot):not(.lt-count) { display: none; } /* drop "Live" word */
+  .now h1 { font-size: clamp(26px, 9vw, 38px); }
+}
+
+
+/* ============================================================
+   STUDIO (.studio / .s-topbar / .side …)
+   admin.css already does the off-canvas drawer at <=880px;
+   these rules clean up the topbar cluster and content padding.
+   ============================================================ */
+
+@media (max-width: 760px) {
+  .s-topbar { flex-wrap: wrap; padding: 10px 14px; gap: 10px; }
+  .s-right { gap: 8px; margin-left: auto; }
+  .s-livestat { display: none; }
+}
+
+@media (max-width: 560px) {
+  .s-theme { display: none; }            /* 5-button row, too wide */
+  .s-content { padding: 18px 14px 28px; }
+  .s-head { gap: 10px; margin-bottom: 22px; }
+  .s-avatar { width: 32px; height: 32px; font-size: 13px; }
+  .login-card { padding: 28px 22px; border-radius: 18px; }
+
+  /* Modals: full viewport on tiny screens */
+  .modal-scrim { padding: 12px; align-items: flex-start; padding-top: 24px; }
+  .modal { width: 100%; max-height: calc(100vh - 48px); border-radius: 18px; }
+}
+
+@media (max-width: 880px) {
+  .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+
+/* ============================================================
+   LANDING (index.html) — already simple flex; ensure tap targets
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wrap a { padding: 14px 28px; font-size: 15px; }
+}
+
+
+/* ============================================================
+   Touch a11y: enforce 40px minimum tap target on coarse pointers
+   ============================================================ */
+@media (hover: none) and (pointer: coarse) {
+  button, .side-item, .lang-opt, .s-iconbtn, .top .tabs button, .top-right .live-tab { min-height: 40px; }
+}
