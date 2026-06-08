@@ -293,9 +293,11 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
 
 /* ============================================================
    Studio language menu (topbar dropdown + sidebar variant):
-   force OPAQUE solid background. var(--surface) ends up
-   semi-transparent in the "still" theme and the menu reads as
-   broken / overlapping content.
+   force OPAQUE solid background and ensure the container is
+   tall enough to actually hold all 5 language options.
+   The "still" theme's var(--surface) is semi-transparent which
+   reads as broken on mobile; also a parent overflow / clamp
+   was clipping the dropdown to one row.
    ============================================================ */
 .lang-menu,
 .lang-menu.topbar {
@@ -305,13 +307,42 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 14px !important;
   box-shadow: 0 18px 44px -10px rgba(0,0,0,.75) !important;
-  z-index: 100 !important;
+  z-index: 9999 !important;
   isolation: isolate;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  padding: 6px !important;
+  width: 180px !important;
+  min-width: 180px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  /* topbar position: drop below the globe button, anchored to its right */
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: auto !important;
+  bottom: auto !important;
 }
 .lang-menu .lang-opt {
   color: #e6e9ea !important;
   background: transparent !important;
+  background-color: transparent !important;
+  padding: 10px 12px !important;
+  border-radius: 9px !important;
+  font-size: 14px !important;
+  text-align: left !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  white-space: nowrap !important;
+  min-height: 0 !important;     /* defeat the 40px tap-target stretch here too */
+  height: auto !important;
 }
 .lang-menu .lang-opt:hover {
   background: rgba(255,255,255,.06) !important;
@@ -320,6 +351,10 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   background: rgba(255,255,255,.12) !important;
   color: #fff !important;
 }
+.lang-menu .lang-opt svg { color: #fff !important; }
+
+/* The wrapper that anchors the dropdown — must not clip absolute children */
+.s-lang { overflow: visible !important; }
 
 
 /* ============================================================
