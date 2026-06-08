@@ -65,48 +65,20 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   .top-right .live-tab .lt-count { font-size: 10px; }
   .top-right.vs-open > * { transform: none !important; }
 
-  /* Listener page: hide the view switcher entirely on mobile —
-     the Studio is reached from the landing page on phones. */
-  .stage .viewswitch { display: none !important; }
+  /* On mobile, hide the floating view-switcher on BOTH apps.
+     - Listener: reach Studio via the landing page.
+     - Studio: a "Listener" item is embedded in the sidebar footer. */
+  .viewswitch, .viewswitch.right, .stage .viewswitch, .studio .viewswitch {
+    display: none !important;
+  }
 
-  /* Studio view switcher (keeps showing on Studio mobile only):
-     Anchored bottom-RIGHT corner, raised above the mini player.
-     Compact (no eyebrow label, smaller pills). Pinned to the viewport
-     so it stays in the same place while you scroll. */
-  .viewswitch, .viewswitch.right {
-    left: auto !important;
-    right: 12px !important;
-    bottom: 88px !important;          /* clear the mini player at the bottom */
-    padding: 4px 5px !important;
-    gap: 0 !important;
-    border-radius: 999px !important;
-    box-shadow: 0 10px 30px -10px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04) inset !important;
-    background: rgba(20,24,27,.94) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-color: rgba(255,255,255,.10) !important;
+  /* Style the new Studio sidebar "Listener" link to match other side-items */
+  .side-listener-link {
+    text-decoration: none;
+    color: var(--muted);
   }
-  .vs-label { display: none !important; }   /* drop the "View" eyebrow label */
-  .vs-seg {
-    background: transparent !important;
-    padding: 0 !important;
-    gap: 2px !important;
-  }
-  .vs-seg a {
-    padding: 6px 12px !important;
-    font-size: 12px !important;
-    border-radius: 999px !important;
-    color: rgba(255,255,255,.65) !important;
-  }
-  .vs-seg a.on {
-    color: #14181b !important;
-    background: #ffffff !important;
-  }
-  .viewswitch.collapsed {
-    width: 44px !important; height: 44px !important; padding: 0 !important;
-    background: rgba(20,24,27,.94) !important;
-  }
-  .viewswitch.collapsed .vs-x { color: #fff !important; }
+  .side-listener-link:hover { color: var(--ink); }
+  .side-listener-link svg { width: 20px; height: 20px; flex: none; }
 
 
   /* Now-Playing hero: tighten padding, scale the orb, less vertical bezel */
