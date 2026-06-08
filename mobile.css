@@ -292,6 +292,37 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
 
 
 /* ============================================================
+   Studio language menu (topbar dropdown + sidebar variant):
+   force OPAQUE solid background. var(--surface) ends up
+   semi-transparent in the "still" theme and the menu reads as
+   broken / overlapping content.
+   ============================================================ */
+.lang-menu,
+.lang-menu.topbar {
+  background: #14181b !important;
+  background-color: #14181b !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  box-shadow: 0 18px 44px -10px rgba(0,0,0,.75) !important;
+  z-index: 100 !important;
+  isolation: isolate;
+}
+.lang-menu .lang-opt {
+  color: #e6e9ea !important;
+  background: transparent !important;
+}
+.lang-menu .lang-opt:hover {
+  background: rgba(255,255,255,.06) !important;
+}
+.lang-menu .lang-opt.on {
+  background: rgba(255,255,255,.12) !important;
+  color: #fff !important;
+}
+
+
+/* ============================================================
    HARD-LOCK toggle switch geometry — applies on every screen,
    wins over any tap-target / min-height rule, defeats flex stretch.
    ============================================================ */
