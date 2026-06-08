@@ -178,22 +178,80 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
    ============================================================ */
 
 @media (max-width: 760px) {
-  .s-topbar { flex-wrap: wrap; padding: 10px 14px; gap: 10px; }
-  .s-right { gap: 8px; margin-left: auto; }
-  .s-livestat { display: none; }
+  /* Topbar: keep search hidden, compact the right cluster */
+  .s-topbar { flex-wrap: wrap; padding: 10px 12px; gap: 10px; min-height: 56px; }
+  .s-search { display: none; }                  /* search hidden on phones */
+  .s-right { gap: 6px; margin-left: auto; }
+  .s-livestat { display: none; }                /* the "Live" pill — redundant */
+  .s-iconbtn { width: 36px !important; height: 36px !important; }
+  .s-golive { padding: 6px 11px !important; font-size: 12px !important; }
+  .s-golive span { display: none; }             /* drop the long label */
+
+  /* ALL grid presets — collapse to single column, overriding inline styles */
+  .grid.g2, .grid.g3, .grid.g4 {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  /* Hero "Go live" tile: stack inner pieces */
+  .golive-tile { padding: 18px 18px !important; gap: 14px !important; }
+  .gl-text span { -webkit-line-clamp: 3; }
+
+  /* Stat tiles: smaller numbers so they don't overflow */
+  .stat-tile { padding: 18px 18px !important; }
+  .stat-tile .big { font-size: 34px !important; }
+  .stat-tile .eyebrow { margin-bottom: 10px !important; }
+  .stat-tile .sub { font-size: 12px !important; margin-top: 8px !important; }
+
+  /* Live console: already stacks at 860 in admin.css; tighten further */
+  .live-console { padding: 18px !important; gap: 16px !important; border-radius: 18px; }
+
+  /* Cards / sections */
+  .card { padding: 16px !important; border-radius: 16px; }
+  .s-head h1 { font-size: 24px !important; }
+  .s-head p { font-size: 14px !important; }
+
+  /* Calendar: 7-column week grid is unusable at phone width — make it
+     a horizontally scrollable strip so days stay readable */
+  .cal-card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cal-card .wk-grid, .cal-card .cal-grid {
+    min-width: 720px;       /* force horizontal scroll instead of squish */
+  }
+
+  /* "Up next" / lineup lists: tighten row padding */
+  .lineup-item, .lu-row, .offair-card { padding: 12px 14px !important; }
+
+  /* Forms / settings */
+  .settings-row { grid-template-columns: 1fr !important; gap: 10px; }
+  .field, .in { width: 100%; }
 }
+
 
 @media (max-width: 560px) {
-  .s-theme { display: none; }            /* 5-button row, too wide */
-  .s-content { padding: 18px 14px 28px; }
-  .s-head { gap: 10px; margin-bottom: 22px; }
+  .s-content { padding: 16px 12px 24px !important; }
+  .s-head { gap: 8px; margin-bottom: 18px; }
+  .s-head h1 { font-size: 22px !important; }
   .s-avatar { width: 32px; height: 32px; font-size: 13px; }
-  .login-card { padding: 28px 22px; border-radius: 18px; }
 
-  /* Modals: full viewport on tiny screens */
-  .modal-scrim { padding: 12px; align-items: flex-start; padding-top: 24px; }
-  .modal { width: 100%; max-height: calc(100vh - 48px); border-radius: 18px; }
+  /* Even more compact stat numbers */
+  .stat-tile .big { font-size: 28px !important; }
+
+  /* Login screen: breathing room on small phones */
+  .login-card { padding: 26px 20px !important; border-radius: 18px; }
+  .login h1 { font-size: 26px !important; }
+
+  /* Top icons can drop the notification ping border-jitter */
+  .s-iconbtn { width: 34px !important; height: 34px !important; }
+
+  /* Lang menu in topbar: ensure it doesn't slip off-screen */
+  .lang-menu.topbar { right: 0 !important; left: auto !important; min-width: 170px; }
+
+  /* Modals full-width on tiny screens */
+  .modal-scrim { padding: 10px; align-items: flex-start; padding-top: 20px; }
+  .modal { width: 100%; max-height: calc(100vh - 40px); border-radius: 16px; }
+  .modal-h { padding: 16px 18px !important; }
+  .modal-body { padding: 16px 18px !important; }
 }
+
 
 @media (max-width: 880px) {
   .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
